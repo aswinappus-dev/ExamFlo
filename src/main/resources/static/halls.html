@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manage Halls - ExamFlow</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="/css/style.css">
+    <!-- Theme Script -->
     <script>
         // Initialize theme based on localStorage or system preference
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -17,11 +20,18 @@
 </head>
 <body class="bg-gray-50 dark:bg-[#0F1B2A] text-gray-800 dark:text-gray-200 transition-colors duration-300">
 
+    <!-- Live Background Canvas -->
     <canvas id="live-background-canvas" style="position: fixed; top: 0; left: 0; z-index: -1; width: 100vw; height: 100vh"></canvas>
 
+    <!-- Sidebar container (will be populated by sidebar.js) -->
     <div id="sidebar-container"></div>
+     <!-- Hover zone for desktop sidebar -->
+    <div id="sidebar-hover-zone" class="fixed top-0 left-0 h-full w-4 z-40 hidden md:block"></div>
 
-    <div id="main-content" class="flex-1 flex flex-col overflow-hidden transition-all duration-300 ease-in-out md:pl-64">
+
+    <!-- Main Content Area -->
+    <div id="main-content" class="flex-1 flex flex-col overflow-hidden transition-all duration-300 ease-in-out md:pl-0"> <!-- Start with 0 padding -->
+        <!-- Mobile Header -->
         <header class="bg-white dark:bg-gray-800 shadow-md p-4 md:hidden flex justify-between items-center sticky top-0 z-10">
              <a href="/" class="flex items-center">
                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" class="w-8 h-8">
@@ -37,6 +47,7 @@
             </button>
         </header>
 
+        <!-- Page Content -->
         <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
             <div class="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md max-w-7xl mx-auto">
                 <div class="flex justify-between items-center mb-6">
@@ -48,6 +59,7 @@
                     </button>
                 </div>
 
+                <!-- Hall Table -->
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-100 dark:bg-gray-900">
@@ -56,12 +68,11 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Hall Name</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Benches</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Bench Layout</th>
-                                <th scope="col" class="relative px-6 py-3">
-                                    <span class="sr-only">Actions</span>
-                                </th>
+                                <th scope="col" class="relative px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="hall-table-body" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            <!-- Hall rows will be injected here by JS -->
                             <tr><td colspan="5" class="text-center py-10 text-gray-500 dark:text-gray-400">Loading halls...</td></tr>
                         </tbody>
                     </table>
@@ -71,8 +82,10 @@
         </main>
     </div>
 
-    <div id="hall-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-4 hidden">
-        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl w-full max-w-md flex flex-col max-h-full">
+    <!-- Add/Edit Hall Modal (Initially Hidden) -->
+    <div id="hall-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-4 hidden animate-popup">
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl w-full max-w-md flex flex-col max-h-[90vh]">
+            <!-- Modal Header -->
             <div class="flex-shrink-0 flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
                 <h3 id="modal-title" class="text-lg font-semibold text-gray-900 dark:text-gray-100">Add New Hall</h3>
                 <button id="modal-close-button" class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300">
@@ -81,8 +94,10 @@
                     </svg>
                 </button>
             </div>
+            <!-- Modal Body - Hall Form -->
             <div class="p-6 overflow-y-auto hide-scrollbar">
                 <form id="hall-form" class="space-y-4">
+                    <!-- Hidden input to store hall ID when editing -->
                     <input type="hidden" id="hall-id" name="id">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -95,11 +110,11 @@
                             />
                         </div>
                         <div>
-                            <label for="hallName" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Hall Number</label>
+                            <label for="hallName" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Hall Number / Name</label>
                             <input
                                 type="text" id="hallName" name="name" required
                                 class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                placeholder="e.g., 101"
+                                placeholder="e.g., 101 or Seminar Hall"
                             />
                         </div>
                     </div>
@@ -111,6 +126,7 @@
                             placeholder="e.g., 30"
                         />
                     </div>
+                    <!-- Column Selector -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-400">Bench Layout (Columns)</label>
                         <div class="mt-2 flex w-full bg-gray-200 dark:bg-gray-900 p-1 rounded-lg">
@@ -123,9 +139,11 @@
                                 3 Columns
                             </button>
                             <button type="button" data-columns="4"
-                                class="column-button w-full py-2 text-sm font-semibold rounded-md transition-colors bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-300 shadow-sm"> 4 Columns
+                                class="column-button w-full py-2 text-sm font-semibold rounded-md transition-colors bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-300 shadow-sm"> <!-- Default selected -->
+                                4 Columns
                             </button>
                         </div>
+                         <!-- Hidden input to store selected columns value -->
                          <input type="hidden" id="columns" name="columns" value="4">
                     </div>
 
@@ -139,13 +157,20 @@
         </div>
     </div>
 
+    <!-- Bench Layout Tooltip (Initially Hidden) -->
     <div id="bench-tooltip" class="absolute z-50 bg-gray-100 dark:bg-gray-900 p-2 rounded-md shadow-lg tooltip-bubble border border-gray-300 dark:border-gray-700 hidden"
          style="top: 0; left: 0;">
-        </div>
+        <!-- Content generated by JS -->
+    </div>
 
 
+    <!-- Load Sidebar Logic -->
+    <script src="/js/sidebar.js"></script>
+    <!-- Shared Utilities (Theme, Auth Helpers) -->
     <script src="/js/main.js"></script>
+    <!-- Page Specific JS -->
     <script src="/js/admin/halls.js"></script>
+    <!-- Live Background -->
     <script src="/js/live-background.js"></script>
 </body>
 </html>
