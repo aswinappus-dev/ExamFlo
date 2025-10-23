@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json',
-                    // Add Authorization header if needed
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(studentData),
             });
@@ -217,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'DELETE',
                 headers: {
                     // Add Authorization header if needed
+                    'Authorization': `Bearer ${token}`
                 }
             });
 

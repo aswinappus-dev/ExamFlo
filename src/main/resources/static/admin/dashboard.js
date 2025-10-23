@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const response = await fetch('/api/admin/dashboard-stats', {
                  headers: {
                     // Include Authorization header if using JWTs
-                    // 'Authorization': `Bearer ${token}` 
+                    Authorization: `Bearer ${token}`
                  }
             });
 
@@ -100,6 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         window.location.href = '/admin-login.html'; // Redirect to login
     });
+    
 
     // --- Initial Load ---
     fetchDashboardStats();
