@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - ExamFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-[#0F1B2A] text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <canvas id="live-background-canvas" style="position: fixed; top: 0; left: 0; z-index: -1; width: 100vw; height: 100vh"></canvas>
+
+    <div class="min-h-screen flex items-center justify-center px-4 bg-transparent">
+        <div class="w-full max-w-sm">
+            <div id="login-form-container">
+                <form id="login-form" class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white text-center mb-6">Admin Login</h1>
+                    
+                    <p id="error-message" class="bg-red-200 dark:bg-red-900 bg-opacity-50 text-red-800 dark:text-red-300 p-3 rounded-md mb-4 text-center hidden"></p>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Username</label>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                required
+                                class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                placeholder="admin"
+                            />
+                        </div>
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                required
+                                class="w-full px-4 py-3 bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                placeholder="password"
+                            />
+                        </div>
+                    </div>
+                    <button
+                        type="submit"
+                        class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105"
+                    >
+                        Login
+                    </button>
+                    <p class="text-center mt-4 text-sm text-gray-600 dark:text-gray-400">
+                        <a href="/" class="hover:underline">← Go back to Welcome Page</a>
+                    </p>
+                </form>
+            </div>
+
+            <div id="logged-in-container" class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 text-center hidden">
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Already Logged In</h1>
+                <p class="text-gray-700 dark:text-gray-300 mb-6">You are already logged in as an administrator.</p>
+                <div class="space-y-4">
+                    <a href="/admin/dashboard.html" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105">
+                        Go to Dashboard
+                    </a>
+                    <button
+                        id="logout-button"
+                        class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105"
+                    >
+                        Logout
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script> 
+    <script src="/js/admin-login.js"></script>
+    <script src="/js/live-background.js"></script> 
+</body>
+</html>

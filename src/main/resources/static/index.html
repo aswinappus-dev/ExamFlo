@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ExamFlow - The seamless solution for exam seating.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-[#0F1B2A] text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    
+    <div class="min-h-screen">
+        <canvas id="live-background-canvas" style="position: fixed; top: 0; left: 0; z-index: -1; width: 100vw; height: 100vh"></canvas>
+        
+        <div id="sidebar-container"></div>
+        
+        <div id="sidebar-hover-zone" class="fixed top-0 left-0 h-full w-4 z-40 hidden md:block"></div>
+        
+        <button id="mobile-sidebar-toggle" aria-label="Open sidebar"
+            class="fixed top-4 left-4 z-20 p-2 rounded-md text-gray-300 hover:text-white bg-gray-800 bg-opacity-50 hover:bg-gray-700 md:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16" />
+            </svg>
+        </button>
+        
+        <div id="welcome-container" class="min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+            <main id="welcome-content" style="transition: transform 0.1s ease-out">
+                <h2 id="welcome-intro-text" class="text-3xl md:text-5xl text-gray-600 dark:text-gray-300 mb-2 font-light">
+                    Welcome to
+                </h2>
+                <h1 id="welcome-brand-text" class="font-bold text-7xl md:text-8xl" style="font-family: 'Poppins', sans-serif">
+                    ExamFlow
+                </h1>
+                <p id="welcome-tagline" class="text-lg md:text-xl text-gray-500 dark:text-gray-400 mt-4 max-w-2xl">
+                    </p>
+                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a id="student-button" href="student.html"
+                        class="w-full sm:w-auto bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105">
+                        I'm a Student
+                    </a>
+                    <a id="invigilator-button" href="invigilator.html"
+                        class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105">
+                        I'm an Invigilator
+                    </a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script src="/js/welcome.js"></script>
+</body>
+</html>
